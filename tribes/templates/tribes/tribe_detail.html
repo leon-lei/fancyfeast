@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}{{ tribe.name }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1>{{ tribe.name }}</h1>
+
+    {% if request.user.username == tribe.chieftain.user.username %}
+        <h2>User and Chieftain are the same!</h2>
+    {% endif %}
+
+    <!-- Update Tribe -->
+    <form action="" method="GET" style="display: inline;">
+        <button type="submit" class="btn btn-info btn-sm">
+            <i class="fas fa-edit"></i>
+        </button>
+    </form>
+    <p><b>Chieftain: </b> {{ tribe.chieftain }}</p>
+
+    <h3> Tribesmen </h3>
+    <ul>
+        {% for tribeman in tribe.members.all %}
+            <li>{{ tribeman }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

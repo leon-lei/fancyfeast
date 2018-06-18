@@ -1,0 +1,11 @@
+# Disallow crawling of the entire website
+User-agent: * 
+Disallow: /
+
+# show AdSense ads on those pages
+User-agent: Mediapartners-Google
+Allow: /
+
+# Block all images on your site from Google Images
+User-agent: Googlebot-Image
+Disallow: /

@@ -1,0 +1,10 @@
+body {
+	background-color: grey;
+	background-image: url(" images/background.jpg ");
+	background-size: cover;
+	background-blend-mode: lighten;
+}
+
+.navbar-brand{
+	font-family: 'Satisfy', cursive;
+}

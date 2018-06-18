@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Log In{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1>Welcome to Fancy Feast</h1>
+    <br>
+    <div class="row">
+        <div class="col-md-8">
+            <h2>About Us</h2>
+        </div>
+        <div class="col-md-4">
+            <h2>Log In</h2> 
+            <br>
+            <form method='post'>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Log In</button>
+            </form>
+        </div>
+    </div>    
+</div>
+{% endblock %}
