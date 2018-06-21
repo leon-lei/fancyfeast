@@ -15,7 +15,7 @@ class IndexView(ListView):
 
 class TribeCreate(CreateView):
     model = Tribe
-    fields = ['name', 'chieftain', 'image']
+    fields = ['name', 'chieftain', 'tribesmen' ,'image']
 
 
 class TribeDelete(DeleteView):
@@ -23,11 +23,37 @@ class TribeDelete(DeleteView):
     success_url = reverse_lazy('tribes:index')
 
 
-class TribeDetail(DetailView):
+class TribeDetails(DetailView):
     model = Tribe
-    template_name = 'tribes/tribe_detail.html'
+    template_name = 'tribes/tribe_details.html'
 
 
 class TribeUpdate(UpdateView):
     model = Tribe
-    fields = ['name', 'chieftain', 'image']
+    fields = ['name', 'chieftain', 'description', 'tribesmen', 'image']
+
+
+class EventCreate(CreateView):
+    model = Event
+    fields = ['name', 'description', 'date', 'tribe']
+
+
+class EventDetails(DetailView):
+    model = Event
+    template_name = 'tribes/event_details.html'
+
+
+class EventUpdate(UpdateView):
+    model = Event
+    fields = [
+        'name', 'description', 'date', 
+        'street', 'city', 'zipcode', 'state',
+        'members', 'yes', 'no']
+
+
+class MyEventsIndex(ListView):
+    template_name = 'tribes/my_events_index.html'
+    context_object_name = 'my_events'
+
+    def get_queryset(self):
+        return Event.objects.filter(attending = request.user)  # contains?

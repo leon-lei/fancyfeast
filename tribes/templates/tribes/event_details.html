@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{{ event.name }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1>{{ event.name }}</h1>
+
+    {% if request.user.username == event.tribe.chieftain.user.username %}
+        <h4>As the tribe's chieftain, you can edit</h4>
+        <!-- Update Tribe -->
+        <form action="{% url 'tribes:event-update' event.id %}" method="GET" style="display: inline;">
+            <button type="submit" class="btn btn-info btn-sm">
+                <i class="fas fa-edit"></i>
+            </button>
+        </form>
+    {% endif %}
+    <br>
+    <br>
+    <p><b>Chieftain: </b> {{ event.tribe.chieftain }}</p>
+    <p><b>Yes: </b> {{ event.yes }}</p>
+    <p><b>No: </b> {{ event.no }}</p>
+    <h3> Attending </h3>
+    <ul>
+        {% for member in event.members.all %}
+            <li>{{ member.user.username }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
