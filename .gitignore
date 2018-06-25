@@ -1,14 +1,5 @@
 /fancyfeast/settings/
 
-# For HMI
-foobar.py
-hmi_credentials.py
-archive
-*.json
-*.log
-*.pickle
-*.txt
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
