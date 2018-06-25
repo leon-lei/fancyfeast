@@ -56,4 +56,4 @@ class MyEventsIndex(ListView):
     context_object_name = 'my_events'
 
     def get_queryset(self):
-        return Event.objects.filter(attending = request.user)  # contains?
+        return Event.objects.all()  # contains?

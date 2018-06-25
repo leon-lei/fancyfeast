@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}My Events{% endblock %}
+
+{% block body %}
+<div class="tribes-container container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>My Events Index</h1>
+            {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p>
+            {% endif %}
+        </div>
+        {% if my_events %}
+            {% for event in my_events %}
+            <div class="col-md-4">
+                <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                    <div class="card-body d-flex flex-column align-items-start">
+                        <h3 class="mb-0">
+                          <a class="text-dark" href="{% url 'tribes:event-details' event.id %}">{{ event.name }}</a>
+                        </h3>
+                        <div class="mb-1 text-muted">{{ event.created }}</div>
+                        <strong><a href="{% url 'tribes:event-details' event.id %}">Event Details</a></strong>
+
+                        {% if request.user.username == event.tribe.chieftain.user.username %}
+                        {% endif %}
+                    </div>
+                      <img class="card-img-right flex-auto d-none d-lg-block" src={{ event.image.url }} width="150" height="150">
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h2>No events have been created yet!</h2>
+        {% endif %}
+    
+    </div>
+</div>
+            
+{% endblock %}
