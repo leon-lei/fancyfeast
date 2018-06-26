@@ -16,6 +16,9 @@ class Tribe(models.Model):
     def get_absolute_url(self):
         return reverse('tribes:tribe-details', kwargs={'pk': self.pk})
 
+    def get_number_of_events(self):
+        return self.tribe.count()
+
     def __str__(self):
         return self.name
 
