@@ -17,7 +17,7 @@ class Tribe(models.Model):
         return reverse('tribes:tribe-details', kwargs={'pk': self.pk})
 
     def get_number_of_events(self):
-        return self.tribe.count()
+        return self.event.count()
 
     def __str__(self):
         return self.name
@@ -38,7 +38,7 @@ class Event(models.Model):
     zipcode = models.CharField(max_length=10, blank=True)
     yes = models.IntegerField(default=0)
     no = models.IntegerField(default=0)
-    tribe = models.ForeignKey(Tribe, related_name='tribe', on_delete=models.CASCADE)
+    tribe = models.ForeignKey(Tribe, related_name='event', on_delete=models.CASCADE)
     members = models.ManyToManyField(UserProfile, related_name='members')
     
     def get_absolute_url(self):
