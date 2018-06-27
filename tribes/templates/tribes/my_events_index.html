@@ -18,13 +18,22 @@
                         <h3 class="mb-0">
                           <a class="text-dark" href="{% url 'tribes:event-details' event.id %}">{{ event.name }}</a>
                         </h3>
-                        <div class="mb-1 text-muted">{{ event.created }}</div>
-                        <strong><a href="{% url 'tribes:event-details' event.id %}">Event Details</a></strong>
+                        <div class="mb-1 text-muted">{{ event.date }}</div>
 
                         {% if request.user.username == event.tribe.chieftain.user.username %}
+                            <!-- Delete Event -->
+                            <form action="{% url 'tribes:event-delete' event.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="event_id" value="{{ event.id }}" />
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
                         {% endif %}
                     </div>
+                    {% if event.image.url %}
                       <img class="card-img-right flex-auto d-none d-lg-block" src={{ event.image.url }} width="150" height="150">
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

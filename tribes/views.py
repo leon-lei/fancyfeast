@@ -38,6 +38,11 @@ class EventCreate(CreateView):
     fields = ['name', 'description', 'date', 'tribe']
 
 
+class EventDelete(DeleteView):
+    model = Event
+    success_url = reverse_lazy('tribes:my-events-index')
+
+
 class EventDetails(DetailView):
     model = Event
     template_name = 'tribes/event_details.html'

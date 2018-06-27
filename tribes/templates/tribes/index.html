@@ -18,8 +18,7 @@
                         <h3 class="mb-0">
                           <a class="text-dark" href="{% url 'tribes:tribe-details' tribe.id %}">{{ tribe.name }}</a>
                         </h3>
-                        <div class="mb-1 text-muted">{{ tribe.created }}</div>
-                        <strong><a href="{% url 'tribes:tribe-details' tribe.id %}">Tribe Details</a></strong>
+                        <!-- <div class="mb-1 text-muted">{{ tribe.created }}</div> -->
 
                         {% if request.user.username == tribe.chieftain.user.username %}
                             <!-- Delete Tribe -->
