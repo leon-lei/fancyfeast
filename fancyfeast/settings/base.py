@@ -19,14 +19,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
-    'tribes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third party apps
+    'crispy_forms',
+    # my apps
+    'accounts',
+    'tribes',
 ]
 
 MIDDLEWARE = [
@@ -113,6 +116,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'fancyfeast/static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'fancyfeast/media')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/account/'
 

@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
 {% block title %}Create Event{% endblock %}
 
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-7">
+        <div class="col-sm-12 col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3>Create A New Event</h3>
@@ -13,7 +15,7 @@
                     {% endif %}
                     <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {% include 'tribes/form-template.html' %}
+                        {{ form|crispy }}
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-success">Submit</button>
