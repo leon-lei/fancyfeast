@@ -8,10 +8,10 @@ class Tribe(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=80)
-    description = models.TextField(max_length=500)
+    description = models.TextField(max_length=500, blank=True)
     image = models.ImageField(upload_to='tribe_image', blank=True)
     chieftain = models.ForeignKey(UserProfile, related_name='chieftain', on_delete=models.CASCADE)
-    tribesmen = models.ManyToManyField(UserProfile, related_name='tribesmen')
+    tribesmen = models.ManyToManyField(UserProfile, related_name='tribe')
 
     def get_absolute_url(self):
         return reverse('tribes:tribe-details', kwargs={'pk': self.pk})
@@ -39,7 +39,7 @@ class Event(models.Model):
     yes = models.IntegerField(default=0)
     no = models.IntegerField(default=0)
     tribe = models.ForeignKey(Tribe, related_name='event', on_delete=models.CASCADE)
-    members = models.ManyToManyField(UserProfile, related_name='members')
+    attendees = models.ManyToManyField(UserProfile, related_name='event')
     
     def get_absolute_url(self):
         return reverse('tribes:event-details', kwargs={'pk': self.pk})

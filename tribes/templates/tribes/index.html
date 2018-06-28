@@ -31,7 +31,9 @@
                             </form>
                         {% endif %}
                     </div>
+                    {% if tribe.image %}
                       <img class="card-img-right flex-auto d-none d-lg-block" src={{ tribe.image.url }} width="150" height="150">
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

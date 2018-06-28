@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Create Tribe TEST{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <br>
+    <h1>Create a Tribe TEST</h1>
+    <form method="POST" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

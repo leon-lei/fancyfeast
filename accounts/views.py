@@ -1,4 +1,4 @@
-from accounts.forms import (
+from .forms import (
     RegistrationForm, 
     EditProfileForm, 
 )

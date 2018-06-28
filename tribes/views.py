@@ -1,9 +1,13 @@
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, TemplateView
+from django.shortcuts import redirect, render, get_object_or_404
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, ListView, TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+from accounts.models import UserProfile
 from tribes.models import Event, Tribe
+
+from .forms import TribeForm
+
 
 class IndexView(ListView):
     template_name = 'tribes/index.html'
@@ -62,3 +66,38 @@ class MyEventsIndex(ListView):
 
     def get_queryset(self):
         return Event.objects.all()  # contains?
+
+
+class CreateTribeView(View):
+    form_class = TribeForm
+    template_name = 'tribes/create_tribe_form.html'
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            tribe = form.save(commit=False)
+            name = form.cleaned_data['name']
+            chieftain = request.user
+            tribe.save()
+
+        return render(request, self.template_name, {'form':'form'})
+
+
+def create_tribe_obj(request):
+    if request.method == 'POST':
+        form = TribeForm(request.POST)
+        if form.is_valid():
+            tribe = form.save(commit=False)
+            tribe.name = form.cleaned_data['name']
+            tribe.chieftain = UserProfile.objects.get(user=request.user)
+            tribe.save()
+            return redirect(reverse('tribes:index'))
+    else:
+        form = TribeForm()
+        return render(request, 'tribes/create_tribe_form.html', {'form': form})
+
