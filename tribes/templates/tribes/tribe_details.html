@@ -3,31 +3,49 @@
 
 {% block body %}
 <div class="container-fluid">
-    <h1>{{ tribe.name }}</h1>
-
-    {% if request.user.username == tribe.chieftain.user.username %}
-        <h4>As the tribe's chieftain, you can edit</h4>
-        <!-- Update Tribe -->
-        <form action="{% url 'tribes:tribe-update' tribe.id %}" method="GET" style="display: inline;">
-            <button type="submit" class="btn btn-info btn-sm">
-                <i class="fas fa-edit"></i>
-            </button>
-        </form>
-    {% endif %}
-    <br>
-    <br>
-    <p><b>Chieftain: </b> {{ tribe.chieftain }}</p>
-    <p><b>Description: </b> {{ tribe.description }}</p>
-    <br>
-    <br>
-    <h3> Tribesmen </h3>
-    <ul>
-        {% for tribeman in tribe.tribesmen.all %}
-            {% if tribeman.user.username != tribe.chieftain.user.username %}
-                <li>{{ tribeman.user.username }}</li>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>{{ tribe.name }}</h1>
+            {% if request.user.username == tribe.chieftain.user.username %}
+                <h4>As the tribe's chieftain, you can edit</h4>
+                <!-- Update Tribe -->
+                <form action="{% url 'tribes:tribe-update' tribe.id %}" method="GET" style="display: inline;">
+                    <button type="submit" class="btn btn-info btn-sm">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </form>
             {% endif %}
-        {% endfor %}
-    </ul>
-    <h3> Events </h3>
+            <br>
+            <br>
+            <p><b>Chieftain: </b> {{ tribe.chieftain }}</p>
+            <p><b>Description: </b> {{ tribe.description }}</p>
+            <br>
+            <br>
+            <h3> Tribesmen </h3>
+            <ul>
+                {% for tribeman in tribe.tribesmen.all %}
+                    {% if tribeman.user.username != tribe.chieftain.user.username %}
+                        <li>{{ tribeman.user.username }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <h3> Events </h3>
+        </div>
+            {% for event in tribe.event.all %}
+            <div class="col-md-4">
+                <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                    <div class="card-body d-flex flex-column align-items-start">
+                        <h3 class="mb-0">
+                        <a class="text-dark" href="{% url 'tribes:event-details' event.id %}">{{ event.name }}</a>
+                        </h3>
+                        <div class="mb-1 text-muted">{{ event.date }}</div>
+                    </div>
+                    {% if event.image.url %}
+                    <img class="card-img-right flex-auto d-none d-lg-block" src={{ event.image.url }} width="150" height="150">
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+    </div>
 </div>
 {% endblock %}
