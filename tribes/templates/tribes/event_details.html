@@ -21,8 +21,8 @@
     <p><b>No: </b> {{ event.no }}</p>
     <h3> Attending </h3>
     <ul>
-        {% for member in event.members.all %}
-            <li>{{ member.user.username }}</li>
+        {% for attendee in event.attendees.all %}
+            <li>{{ attendee.user.username }}</li>
         {% endfor %}
     </ul>
 </div>

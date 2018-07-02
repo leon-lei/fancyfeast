@@ -17,9 +17,29 @@ class IndexView(ListView):
         return Tribe.objects.all()
 
 
-class TribeCreate(CreateView):
-    model = Tribe
-    fields = ['name', 'chieftain', 'tribesmen' ,'image']
+class TribeCreate(View):
+    form_class = TribeForm
+    template_name = 'tribes/create_tribe_form.html'
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            tribe = form.save(commit=False)
+            tribe.name = form.cleaned_data['name']
+            tribe.chieftain = UserProfile.objects.get(user=request.user)
+            tribe.save()
+
+            # Adds to tribemen M2M field
+            tribe.tribesmen.add(UserProfile.objects.get(user=request.user))
+            tribe.save()
+            return redirect(reverse('tribes:index'))
+        else:
+            return render(request, self.template_name, {'form':form})
 
 
 class TribeDelete(DeleteView):
@@ -66,38 +86,3 @@ class MyEventsIndex(ListView):
 
     def get_queryset(self):
         return Event.objects.all()  # contains?
-
-
-class CreateTribeView(View):
-    form_class = TribeForm
-    template_name = 'tribes/create_tribe_form.html'
-
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form':form})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            tribe = form.save(commit=False)
-            name = form.cleaned_data['name']
-            chieftain = request.user
-            tribe.save()
-
-        return render(request, self.template_name, {'form':'form'})
-
-
-def create_tribe_obj(request):
-    if request.method == 'POST':
-        form = TribeForm(request.POST)
-        if form.is_valid():
-            tribe = form.save(commit=False)
-            tribe.name = form.cleaned_data['name']
-            tribe.chieftain = UserProfile.objects.get(user=request.user)
-            tribe.save()
-            return redirect(reverse('tribes:index'))
-    else:
-        form = TribeForm()
-        return render(request, 'tribes/create_tribe_form.html', {'form': form})
-
