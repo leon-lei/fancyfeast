@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}FancyFeast{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h6>Look familiar? Take charge and let group chats be...group chats</h3>
+            {% load static %}
+            <img src= "{% static 'accounts/images/chat-convo.JPG' %}" width="440" height="600"/>
+        </div>
+        <div class="col">
+            <h4>Planning group dinners, made easy</h4>
+            <ol>    
+                <li>Create a group</li>
+                <li>Set your date</li>
+                <li>Let them RSVP</li>
+                <li>Enjoy the dinner YOU choose</li>
+            </ol>
+            <h4>Sign Up Now to set up group events for Free</h4>
+            <br>
+            <form method="POST" enctype='multipart/form-data'>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">Sign Up</button>
+                    </div>
+                </div>
+            </form>
+            By registering your accounts with us, you agree to our Terms of Use
+        </div>
+    </div>
+</div>
+{% endblock %}

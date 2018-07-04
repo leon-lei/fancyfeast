@@ -119,17 +119,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'fancyfeast/media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = '/account/'
+LOGIN_REDIRECT_URL = '/accounts/'   # Redirect to after successful login
 
-LOGIN_URL = '/account/login/'
+LOGIN_URL = '/accounts/login/'   # DO NOT CHANGE
 
 LOGIN_EXEMPT_URLS = (
-    r'^account/logout/$',
-    r'^account/register/$',
-    r'^account/reset-password/$',
-    r'^account/reset-password/done/$',
-    r'^account/reset-password/confirm/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)/$',
-    r'^account/reset-password/complete/$',
+    r'^$',
+    r'^accounts/login/$',
+    r'^accounts/logout/$',
+    r'^accounts/register/$',
+    r'^accounts/reset-password/$',
+    r'^accounts/reset-password/done/$',
+    r'^accounts/reset-password/confirm/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)/$',
+    r'^accounts/reset-password/complete/$',
 )
 
 EMAIL_HOST = 'localhost'
