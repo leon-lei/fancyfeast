@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}All Tribes{% endblock %}
+
+{% block body %}
+<div class="tribes-container container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>All Tribe</h1>
+            {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p>
+            {% endif %}
+        </div>
+        {% if all_tribes %}
+            {% for tribe in all_tribes %}
+            <div class="col-md-4">
+                <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                    <div class="card-body d-flex flex-column align-items-start">
+                        <h3 class="mb-0">
+                          <a class="text-dark" href="{% url 'tribes:tribe-details' tribe.id %}">{{ tribe.name }}</a>
+                        </h3>
+                        <!-- <div class="mb-1 text-muted">{{ tribe.created }}</div> -->
+
+                        {% if request.user.username == tribe.chieftain.user.username %}
+                            <!-- Delete Tribe -->
+                            <form action="{% url 'tribes:tribe-delete' tribe.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="tribe_id" value="{{ tribe.id }}" />
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                    {% if tribe.image %}
+                      <img class="card-img-right flex-auto d-none d-lg-block" src={{ tribe.image.url }} width="150" height="150">
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h2>No tribes have been created yet!</h2>
+        {% endif %}
+    
+    </div>
+</div>
+            
+{% endblock %}

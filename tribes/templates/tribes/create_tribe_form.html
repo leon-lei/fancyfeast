@@ -4,11 +4,11 @@
 {% block body %}
 <div class="container-fluid">
     <br>
-    <h1>Create a Tribe</h1>
+    <h1>Create a New Tribe</h1>
     <form method="POST" enctype='multipart/form-data'>
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-success">Save</button>
     </form>
 </div>
 {% endblock %}
