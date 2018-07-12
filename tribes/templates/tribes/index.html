@@ -5,13 +5,19 @@
 <div class="tribes-container container-fluid">
     <div class="row">
         <div class="col-sm-12">
-            <a class="btn btn-outline-primary" href="{% url 'tribes:tribe-create' %}" role="button">New Tribe</a>
+            <form action="{% url 'tribes:tribe-create' %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-plus-circle"></i>
+                    <strong>&nbsp;&nbsp;New Tribe</strong>
+                </button>
+            </form>
             {% if error_message %}
                 <p><strong>{{ error_message }}</strong></p>
             {% endif %}
         </div>
         <table class="table table-hover">
-            <p> BREAK </p>
+            <p>&nbsp;&nbsp;</p>
             <thead>
                 <tr>
                   <th scope="col">Tribes</th>
@@ -26,10 +32,31 @@
                     <tr>
                         <th scope="row">
                             <a class="text-dark" href="{% url 'tribes:tribe-details' tribe.id %}">{{ tribe.name }}</a>
+                            {% if tribe.image %}
+                                <img class="card-img-right flex-auto d-none d-lg-block" src={{ tribe.image.url }} width="50" height="50">
+                            {% endif %}
                         </th>
                         <td>Chief</td>
                         <td>{{ tribe.tribesmen.count }}</td>
-                        <td>Edit, Disband, Leave</td>
+                        <td>
+                            {% if request.user.username == tribe.chieftain.user.username %}
+                                <!-- Delete Tribe -->
+                                <form action="{% url 'tribes:tribe-delete' tribe.id %}" method="POST" style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="tribe_id" value="{{ tribe.id }}" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                                <!-- Update Tribe -->
+                                <form action="{% url 'tribes:tribe-update' tribe.id %}" method="GET" style="display: inline;">
+                                    <button type="submit" class="btn btn-outline-info btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </form>
+                            {% endif %}
+                            Leave
+                        </td>
                     </tr>
                     {% endfor %}
                 {% else %}
