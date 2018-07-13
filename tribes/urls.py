@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from tribes.views import (
-    IndexView, TribeCreate, TribeDetails, TribeDelete, TribeUpdate, MyEventsIndex,
+    MyTribes, TribeCreate, TribeDetails, TribeDelete, TribeUpdate, MyEventsIndex,
     EventCreate, EventDelete, EventDetails, EventUpdate
 )
 
@@ -9,8 +9,9 @@ from tribes.views import (
 app_name='tribes'
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
+    path('', MyTribes.as_view(), name='my-tribes'),
     path('<int:pk>/', TribeDetails.as_view(), name='tribe-details'),
+    path('<int:pk>/leave/', views.tribe_leave, name='tribe-leave'),
     path('tribe/create/', TribeCreate.as_view(), name='tribe-create'),
     path('tribe/<int:pk>/', TribeUpdate.as_view(), name='tribe-update'),
     path('tribe/<int:pk>/delete/', TribeDelete.as_view(), name='tribe-delete'),

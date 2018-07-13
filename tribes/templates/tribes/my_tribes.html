@@ -27,8 +27,8 @@
                 </tr>
             </thead>
             <tbody>
-                {% if all_tribes %}
-                    {% for tribe in all_tribes %}
+                {% if my_tribes %}
+                    {% for tribe in my_tribes %}
                     <tr>
                         <th scope="row">
                             <a class="text-dark" href="{% url 'tribes:tribe-details' tribe.id %}">{{ tribe.name }}</a>
@@ -36,10 +36,24 @@
                                 <img class="card-img-right flex-auto d-none d-lg-block" src={{ tribe.image.url }} width="50" height="50">
                             {% endif %}
                         </th>
-                        <td>Chief</td>
-                        <td>{{ tribe.tribesmen.count }}</td>
                         <td>
                             {% if request.user.username == tribe.chieftain.user.username %}
+                                Chieftain
+                            {% else %}
+                                Tribeperson
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ tribe.tribesmen.count }}
+                        </td>
+                        <td>
+                            {% if request.user.username == tribe.chieftain.user.username %}
+                                <!-- Update Tribe -->
+                                <form action="{% url 'tribes:tribe-update' tribe.id %}" method="GET" style="display: inline;">
+                                        <button type="submit" class="btn btn-outline-info btn-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </form>    
                                 <!-- Delete Tribe -->
                                 <form action="{% url 'tribes:tribe-delete' tribe.id %}" method="POST" style="display: inline;">
                                     {% csrf_token %}
@@ -48,14 +62,14 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
-                                <!-- Update Tribe -->
-                                <form action="{% url 'tribes:tribe-update' tribe.id %}" method="GET" style="display: inline;">
+                            {% else %}
+                                <!-- Leave Tribe -->
+                                <form action="{% url 'tribes:tribe-leave' tribe.id %}" method="GET" style="display: inline;">
                                     <button type="submit" class="btn btn-outline-info btn-sm">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="far fa-times-circle"></i>
                                     </button>
                                 </form>
                             {% endif %}
-                            Leave
                         </td>
                     </tr>
                     {% endfor %}

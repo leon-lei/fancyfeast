@@ -9,12 +9,12 @@ from tribes.models import Event, Tribe
 from .forms import TribeForm
 
 
-class IndexView(ListView):
-    template_name = 'tribes/index.html'
-    context_object_name = 'all_tribes'
+class MyTribes(View):
+    template_name = 'tribes/my_tribes.html'
 
-    def get_queryset(self):
-        return Tribe.objects.all()
+    def get(self, request):
+        my_tribes = UserProfile.objects.get(user=request.user).tribe.all()
+        return render(request, self.template_name, {'my_tribes':my_tribes})
 
 
 class TribeCreate(View):
@@ -37,14 +37,14 @@ class TribeCreate(View):
             # Adds to tribemen M2M field
             tribe.tribesmen.add(UserProfile.objects.get(user=request.user))
             tribe.save()
-            return redirect(reverse('tribes:index'))
+            return redirect(reverse('tribes:my-tribes'))
         else:
             return render(request, self.template_name, {'form':form})
 
 
 class TribeDelete(DeleteView):
     model = Tribe
-    success_url = reverse_lazy('tribes:index')
+    success_url = reverse_lazy('tribes:my-tribes')
 
 
 class TribeDetails(DetailView):
@@ -86,3 +86,15 @@ class MyEventsIndex(ListView):
 
     def get_queryset(self):
         return Event.objects.all()  # contains?
+
+
+def tribe_leave(request, pk=None):
+    if pk:
+        tribe = Tribe.objects.get(pk=pk)
+        ex_member = UserProfile.objects.get(user=request.user)
+        tribe.tribesmen.remove(ex_member)
+        tribe.save()
+        return redirect(reverse('tribes:my-tribes'))
+    else:
+        return redirect(reverse('tribes:my-tribes'))
+
