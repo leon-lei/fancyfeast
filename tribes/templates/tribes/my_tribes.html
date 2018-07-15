@@ -16,68 +16,82 @@
                 <p><strong>{{ error_message }}</strong></p>
             {% endif %}
         </div>
-        <table class="table table-hover">
-            <p>&nbsp;&nbsp;</p>
-            <thead>
-                <tr>
-                  <th scope="col">Tribes</th>
-                  <th scope="col">Roles</th>
-                  <th scope="col">Members</th>
-                  <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if my_tribes %}
-                    {% for tribe in my_tribes %}
+        {% if my_tribes %}
+            <table class="table table-hover">
+                <p>&nbsp;&nbsp;</p>
+                <thead>
                     <tr>
-                        <th scope="row">
-                            <a class="text-dark" href="{% url 'tribes:tribe-details' tribe.id %}">{{ tribe.name }}</a>
-                            {% if tribe.image %}
-                                <img class="card-img-right flex-auto d-none d-lg-block" src={{ tribe.image.url }} width="50" height="50">
-                            {% endif %}
-                        </th>
-                        <td>
-                            {% if request.user.username == tribe.chieftain.user.username %}
-                                Chieftain
-                            {% else %}
-                                Tribeperson
-                            {% endif %}
-                        </td>
-                        <td>
-                            {{ tribe.tribesmen.count }}
-                        </td>
-                        <td>
-                            {% if request.user.username == tribe.chieftain.user.username %}
-                                <!-- Update Tribe -->
-                                <form action="{% url 'tribes:tribe-update' tribe.id %}" method="GET" style="display: inline;">
-                                        <button type="submit" class="btn btn-outline-info btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </form>    
-                                <!-- Delete Tribe -->
-                                <form action="{% url 'tribes:tribe-delete' tribe.id %}" method="POST" style="display: inline;">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="tribe_id" value="{{ tribe.id }}" />
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            {% else %}
-                                <!-- Leave Tribe -->
-                                <form action="{% url 'tribes:tribe-leave' tribe.id %}" method="GET" style="display: inline;">
-                                    <button type="submit" class="btn btn-outline-info btn-sm">
-                                        <i class="far fa-times-circle"></i>
-                                    </button>
-                                </form>
-                            {% endif %}
-                        </td>
+                        <th scope="col">Tribes</th>
+                        <th scope="col">Roles</th>
+                        <th scope="col">Members</th>
+                        <th scope="col">Actions</th>
                     </tr>
+                </thead>
+                <tbody>
+                    {% for tribe in my_tribes %}
+                        <tr>
+                            <th scope="row">
+                                {% if tribe.image %}
+                                    <img class="card-img-right flex-auto d-none d-lg-block" src={{ tribe.image.url }} width="50" height="50">
+                                {% endif %}
+                                <a class="text-dark" href="{% url 'tribes:tribe-details' tribe.id %}">{{ tribe.name }}</a>
+                            </th>
+                            <td>
+                                {% if request.user.username == tribe.chieftain.user.username %}
+                                    Chieftain
+                                {% else %}
+                                    Tribeperson
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ tribe.tribesmen.count }}
+                            </td>
+                            <td>
+                                {% if request.user.username == tribe.chieftain.user.username %}
+                                    <!-- Update Tribe -->
+                                    <form action="{% url 'tribes:tribe-update' tribe.id %}" method="GET" style="display: inline;">
+                                            <button type="submit" class="btn btn-outline-info btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </form>    
+                                    <!-- Delete Tribe -->
+                                    <form action="{% url 'tribes:tribe-delete' tribe.id %}" method="POST" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="tribe_id" value="{{ tribe.id }}" />
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <!-- Leave Tribe -->
+                                    <form action="{% url 'tribes:tribe-leave' tribe.id %}" method="GET" style="display: inline;">
+                                        <button type="submit" class="btn btn-outline-info btn-sm">
+                                            <i class="far fa-times-circle"></i>
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
                     {% endfor %}
-                {% else %}
-                <p>You are not in any Tribes at the moment. To start, Click on "New Tribe"</p>
-                {% endif %}
-            </tbody>
-          </table>
+                </tbody>
+            </table>
+        {% else %}
+            <table class="table table-hover">
+                <p>&nbsp;&nbsp;</p>
+                <thead>
+                    <tr>
+                        <th scope="col">Tribes</th>
+                        <th scope="col">Roles</th>
+                        <th scope="col">Members</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="col-sm-12">
+                <br>
+                <center>You are not in any Tribes at the moment. To start, Click on "New Tribe"</center>
+            </div>
+        {% endif %}
     </div>
 </div>
             
