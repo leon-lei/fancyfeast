@@ -2,13 +2,13 @@
 {% block title %}My Profile{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container-fluid">
     <h1>Welcome {{ user.first_name }}!</h1>
     <br>
     {% if user.userprofile.image %}
         <img src="{{ user.userprofile.image.url }}" width="240">
     {% endif %}
-    <p>Tribes I'm a part of: <b>2</b> </p>
+    <p>Tribes I'm a part of: <b>{{ user.userprofile.tribe.count }}</b> </p>
     <p>Places I've been: <b>4</b> </p>
     <p>Member for: <b>1 year 2 days</b> </p>
     <br>
