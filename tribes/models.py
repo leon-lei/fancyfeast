@@ -31,7 +31,7 @@ class Event(models.Model):
     updated = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=80, blank=True)
     description = models.TextField(max_length=500, blank=True)
-    date = models.DateField(blank=True)
+    datetime = models.DateTimeField()
     street = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=100, blank=True)
     state = models.CharField(max_length=2, blank=True)
@@ -48,4 +48,4 @@ class Event(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('updated',)
+        ordering = ('datetime',)

@@ -15,6 +15,7 @@ urlpatterns = [
     path('tribe/create/', TribeCreate.as_view(), name='tribe-create'),
     path('tribe/<int:pk>/', TribeUpdate.as_view(), name='tribe-update'),
     path('tribe/<int:pk>/delete/', TribeDelete.as_view(), name='tribe-delete'),
+    path('event/create/<int:pk>/', views.create_event_pk, name='event-create-pk'),
     path('event/create/', EventCreate.as_view(), name='event-create'),
     path('event/<int:pk>/', EventDetails.as_view(), name='event-details'),
     path('event/<int:pk>/delete/', EventDelete.as_view(), name='event-delete'),

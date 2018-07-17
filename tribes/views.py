@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView, View
@@ -6,7 +7,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from accounts.models import UserProfile
 from tribes.models import Event, Tribe
 
-from .forms import TribeForm
+from .forms import EventForm, TribeForm
 
 
 class MyTribes(View):
@@ -98,3 +99,24 @@ def tribe_leave(request, pk=None):
     else:
         return redirect(reverse('tribes:my-tribes'))
 
+def create_event_pk(request, pk=None):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.name = form.cleaned_data['name']
+            event.datetime = form.cleaned_data['datetime']
+            event.tribe = Tribe.objects.get(pk=pk)
+            event.save()
+
+            # Adds to attendees M2M field
+            event.attendees.add(UserProfile.objects.get(user=request.user))
+            event.save()
+            return redirect(reverse('tribes:my-events-index'))
+        else:
+            # Currently thrown by datetime being incorrect
+            return HttpResponse('Form was not valid')
+    else:
+        form = EventForm()
+        args = {'form': form}
+        return render(request, 'tribes/event_form.html', args)

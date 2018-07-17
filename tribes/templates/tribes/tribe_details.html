@@ -7,11 +7,17 @@
         <div class="col-sm-12">
             <h1>{{ tribe.name }}</h1>
             {% if request.user.username == tribe.chieftain.user.username %}
-                <h4>As the tribe's chieftain, you can edit</h4>
+                <h4>Chieftain functions</h4>
                 <!-- Update Tribe -->
                 <form action="{% url 'tribes:tribe-update' tribe.id %}" method="GET" style="display: inline;">
                     <button type="submit" class="btn btn-info btn-sm">
                         <i class="fas fa-edit"></i>
+                    </button>
+                </form>
+                <!-- Create Event and pass in Tribe Id-->
+                <form action="{% url 'tribes:event-create-pk' tribe.id %}" method="GET" style="display: inline;">
+                    <button type="submit" class="btn btn-info btn-sm">
+                        <i class="fas fa-plus-square"></i>
                     </button>
                 </form>
             {% endif %}
