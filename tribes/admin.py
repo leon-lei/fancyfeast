@@ -2,11 +2,11 @@ from django.contrib import admin
 from tribes.models import Event, Tribe
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('date', 'name', 'tribe')
+    list_display = ('name', 'tribe', 'datetime')
 
     def get_queryset(self, request):
         queryset = super(EventAdmin, self).get_queryset(request)
-        queryset = queryset.order_by('-date', 'name')
+        queryset = queryset.order_by('-datetime', 'name')
         return queryset
 
 
