@@ -76,9 +76,9 @@ class EventDetails(DetailView):
 class EventUpdate(UpdateView):
     model = Event
     fields = [
-        'name', 'description', 'date', 
+        'name', 'description', 'datetime', 
         'street', 'city', 'zipcode', 'state',
-        'members', 'yes', 'no']
+        'attendees', 'yes', 'no']
 
 
 class MyEventsIndex(ListView):
@@ -114,9 +114,7 @@ def create_event_pk(request, pk=None):
             event.save()
             return redirect(reverse('tribes:my-events-index'))
         else:
-            # Currently thrown by datetime being incorrect
-            return HttpResponse('Form was not valid')
+            return render(request, 'tribes/event_form.html', {'form': form})
     else:
         form = EventForm()
-        args = {'form': form}
-        return render(request, 'tribes/event_form.html', args)
+        return render(request, 'tribes/event_form.html', {'form': form})
