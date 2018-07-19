@@ -10,6 +10,14 @@ from tribes.models import Event, Tribe
 from .forms import EventForm, TribeForm
 
 
+class MyEvents(View):
+    template_name = 'tribes/my_events.html'
+
+    def get(self, request):
+        my_events = UserProfile.objects.get(user=request.user).event.all()
+        return render(request, self.template_name, {'my_events': my_events})
+
+
 class MyTribes(View):
     template_name = 'tribes/my_tribes.html'
 
@@ -60,12 +68,12 @@ class TribeUpdate(UpdateView):
 
 class EventCreate(CreateView):
     model = Event
-    fields = ['name', 'description', 'date', 'tribe']
+    fields = ['name', 'description', 'datetime', 'tribe']
 
 
 class EventDelete(DeleteView):
     model = Event
-    success_url = reverse_lazy('tribes:my-events-index')
+    success_url = reverse_lazy('tribes:my-events')
 
 
 class EventDetails(DetailView):
@@ -79,14 +87,6 @@ class EventUpdate(UpdateView):
         'name', 'description', 'datetime', 
         'street', 'city', 'zipcode', 'state',
         'attendees', 'yes', 'no']
-
-
-class MyEventsIndex(ListView):
-    template_name = 'tribes/my_events_index.html'
-    context_object_name = 'my_events'
-
-    def get_queryset(self):
-        return Event.objects.all()  # contains?
 
 
 def tribe_leave(request, pk=None):

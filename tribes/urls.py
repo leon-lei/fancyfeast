@@ -1,8 +1,8 @@
 from django.urls import path
 from . import views
 from tribes.views import (
-    MyTribes, TribeCreate, TribeDetails, TribeDelete, TribeUpdate, MyEventsIndex,
-    EventCreate, EventDelete, EventDetails, EventUpdate
+    MyEvents, MyTribes, TribeCreate, TribeDetails, TribeDelete, 
+    TribeUpdate, EventCreate, EventDelete, EventDetails, EventUpdate, 
 )
 
 
@@ -20,5 +20,5 @@ urlpatterns = [
     path('event/<int:pk>/', EventDetails.as_view(), name='event-details'),
     path('event/<int:pk>/delete/', EventDelete.as_view(), name='event-delete'),
     path('event/<int:pk>/update/', EventUpdate.as_view(), name='event-update'),
-    path('event/myevents/', MyEventsIndex.as_view(), name='my-events-index'),
+    path('event/myevents/', MyEvents.as_view(), name='my-events'),
 ]
