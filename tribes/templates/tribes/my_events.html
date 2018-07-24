@@ -8,13 +8,24 @@
             {% if error_message %}
                 <p><strong>{{ error_message }}</strong></p>
             {% endif %}
-            <form action="{% url 'tribes:event-create' %}" method="POST" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-secondary btn-lg">
-                    <i class="fas fa-plus-circle"></i>
-                    <strong>&nbsp;&nbsp;New Event</strong>
-                </button>
-            </form>
+            {% if chieftain_count == 0 %}
+                <p><strong>Create a New Tribe as Chieftain in order to create Events!</strong></p>
+                <form action="{% url 'tribes:tribe-create' %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-plus-circle"></i>
+                        <strong>&nbsp;&nbsp;New Tribe</strong>
+                    </button>
+                </form>
+            {% else %}
+                <form action="{% url 'tribes:event-create' %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-plus-circle"></i>
+                        <strong>&nbsp;&nbsp;New Event</strong>
+                    </button>
+                </form>
+            {% endif %}
             <br>
             <br>
             <br>

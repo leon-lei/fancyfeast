@@ -14,8 +14,9 @@ class MyEvents(View):
     template_name = 'tribes/my_events.html'
 
     def get(self, request):
+        chieftain_count = UserProfile.objects.get(user=request.user).chieftain.count()
         my_events = UserProfile.objects.get(user=request.user).event.all()
-        return render(request, self.template_name, {'my_events': my_events})
+        return render(request, self.template_name, {'chieftain_count': chieftain_count, 'my_events': my_events})
 
 
 class MyTribes(View):
