@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from accounts.models import UserProfile
 from tribes.models import Event, Tribe
 
-from .forms import EventForm, TribeForm
+from .forms import EventForm, EventTribeForm, TribeForm
 
 
 class MyEvents(View):
@@ -66,11 +66,6 @@ class TribeUpdate(UpdateView):
     fields = ['name', 'chieftain', 'description', 'tribesmen', 'image']
 
 
-class EventCreate(CreateView):
-    model = Event
-    fields = ['name', 'description', 'datetime', 'tribe']
-
-
 class EventDelete(DeleteView):
     model = Event
     success_url = reverse_lazy('tribes:my-events')
@@ -99,9 +94,9 @@ def tribe_leave(request, pk=None):
     else:
         return redirect(reverse('tribes:my-tribes'))
 
-def create_event_pk(request, pk=None):
+def event_create_pk(request, pk=None):
     if request.method == 'POST':
-        form = EventForm(request.POST)
+        form = EventTribeForm(request.POST)
         if form.is_valid():
             event = form.save(commit=False)
             event.name = form.cleaned_data['name']
@@ -112,9 +107,30 @@ def create_event_pk(request, pk=None):
             # Adds to attendees M2M field
             event.attendees.add(UserProfile.objects.get(user=request.user))
             event.save()
-            return redirect(reverse('tribes:my-events-index'))
+
+            return redirect(reverse('tribes:my-events'))
         else:
             return render(request, 'tribes/event_form.html', {'form': form})
     else:
-        form = EventForm()
+        form = EventTribeForm()
         return render(request, 'tribes/event_form.html', {'form': form})
+
+def event_create(request):
+    if request.method == 'POST':
+        form = EventForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.name = form.cleaned_data['name']
+            event.datetime = form.cleaned_data['datetime']
+            event.tribe = form.cleaned_data['tribe']
+            event.save()
+
+            # Adds to attendees M2M field
+            event.attendees.add(UserProfile.objects.get(user=request.user))
+            event.save()
+
+            return redirect(reverse('tribes:my-events'))
+    else:
+        form = EventForm(user=request.user)
+    return render(request, 'tribes/event_form.html', {'form': form})
+
