@@ -21,9 +21,18 @@ class EventTribeForm(forms.ModelForm):
         model = Event
         fields = ('name', 'datetime')
     
-    datetime = forms.DateTimeField(widget=forms.DateTimeInput(
-        attrs={
-            'placeholder': '2018-07-17 20:00:00'
+    # datetime = forms.DateTimeField(widget=forms.DateTimeInput(
+    #     attrs={
+    #         'placeholder': '2018-07-17 20:00:00'
+    #     }
+    # ))
+
+    datetime = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(
+        date_attrs = {
+            'placeholder': '2018-08-31'
+        },
+        time_attrs = {
+            'placeholder': '18:30:00'
         }
     ))
 
@@ -46,9 +55,12 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = ('name', 'datetime', 'tribe')
 
-    datetime = forms.DateTimeField(widget=forms.DateTimeInput(
-        attrs={
-            'placeholder': '2018-07-17 20:00:00'
+    datetime = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(
+        date_attrs = {
+            'placeholder': '2018-08-31'
+        },
+        time_attrs = {
+            'placeholder': '18:30:00'
         }
     ))
 
