@@ -2,21 +2,29 @@
 {% block title %}My Profile{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
-    <h1>Welcome {{ user.first_name }}!</h1>
+    <h1>{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}</h1>
     <br>
     {% if user.userprofile.image %}
         <img src="{{ user.userprofile.image.url }}" width="240">
     {% endif %}
+    <hr>
+    
+    <h3>About Me</h3>
+    "{{ user.userprofile.description }}"
+    <hr>
+    
+    <h3>Preferences</h3>
+    {% if request.user.username == user.username %}
+        You can edit
+    {% else %}
+        You cannot edit
+    {% endif %}
+    <hr>
+
+    <h3>Stats</h3>
     <p>Tribes I'm a part of: <b>{{ user.userprofile.tribe.count }}</b> </p>
     <p>Places I've been: <b>4</b> </p>
-    <p>Member for: <b>1 year 2 days</b> </p>
+    <p>Member for: <b>{{ user.date_joined|timesince }}</b> </p>
+    <p>Best Dining Experience: <b>Xi'an Famous Foods</b> </p>
     <br>
-    <p>Welcome to Fancy Feast. Ready to plan an event?</p>
-    <p>It's as easy as creating a tribe, adding your friends, then creating a new event.</p>
-    <br>
-    <h2>Create a new Tribe</h2>
-    <p>Creating a new tribe means that you're in charge of all events</p>
-    <h2>Upcoming Events</h2>
-</div>
 {% endblock %}
