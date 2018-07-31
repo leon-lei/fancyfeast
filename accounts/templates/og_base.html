@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- Loads the path to your static files -->
+        {% load staticfiles %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Cookie|Dancing+Script|Lobster|Satisfy" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'accounts/style.css' %}"/>
+        
+        <title>{% block title %}Fancy Feast{% endblock %}</title>
+        
+      </head>
+      <body>
+        <div class="container">
+          <div class="row">
+            <div class="col-2">
+              <nav class="nav flex-column">
+                <a class="nav-link active" href="#">Active</a>
+                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link disabled" href="#">Disabled</a>
+              </nav>
+            </div>
+            <div class="col-10">
+              {% block body %}
+                  <h1>Base</h1>
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+        <br>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <!-- <a class="navbar-brand" href="/">FancyFeast</a> -->
+          <a href="/">
+            <img src="{% static 'accounts/images/ht-logo.JPG' %}" alt="The Hi Table" style="width:52;height:52;border:0;">
+          </a>
+          <h3>The Hi Table &nbsp;&nbsp;&nbsp;</h3>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavBar" aria-controls="topNavBar" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- <span class="navbar-toggler-icon"></span> -->
+          </button>
+          <div class="collapse navbar-collapse" id="topNavBar">
+            {% if user.is_authenticated %}
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="{% url 'accounts:view_profile' %}">&nbsp;&nbsp;My Profile&nbsp;&nbsp;</a>
+              <a class="nav-item nav-link" href="{% url 'tribes:my-tribes' %}">&nbsp;&nbsp;Tribes&nbsp;&nbsp;</a>
+              <a class="nav-item nav-link" href="{% url 'tribes:my-events' %}">&nbsp;&nbsp;Events&nbsp;&nbsp;</a>
+              <!-- <a class="nav-item nav-link" href="{% url 'accounts:edit_profile' %}">Edit Profile</a> -->
+              <!-- <a class="nav-item nav-link" href="{% url 'accounts:change_password' %}">Change Password</a> -->
+            </div>
+            <div class="nav navbar-nav ml-auto">
+              <!-- <a class="nav-item nav-link" href="{% url 'tribes:event-create' %}">Create Event</a> -->
+              <a class="nav-item nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+            </div>
+            {% else %}
+            <div class="nav navbar-nav ml-auto">
+              <a class="nav-item nav-link" href="{% url 'accounts:login' %}">Log In</a>
+              <a class="nav-item nav-link" href="{% url 'accounts:reset_password' %}">Forgot your password?</a>
+            </div>
+            {% endif %}
+          </div>
+        </nav>
+        <br>
+
+
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    </body>
+
+</html>
