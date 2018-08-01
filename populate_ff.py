@@ -14,7 +14,7 @@ def populate():
     # Create Users
     users = ['alpha', 'beta', 'gamma', 'delta', 'epsilon']
     for user in users:
-        add_user(email=f'{user}@example.com', username=user, password='something')
+        add_user(email=f'{user}@example.com', username=user, password='something', first=user, last='Scott')
 
     # Create Tribes
     alpha = UserProfile.objects.filter(user=User.objects.get(username='alpha'))[0]
@@ -52,8 +52,8 @@ def populate():
         for e in Event.objects.filter(tribe=t):
             print(f'- {t} - {e}')
 
-def add_user(email, username, password):
-    u = User.objects.get_or_create(email=email, username=username)[0]
+def add_user(email, username, password, first, last):
+    u = User.objects.get_or_create(email=email, username=username, first_name=first, last_name=last)[0]
     u.set_password(password)
     u.save()
     return u
