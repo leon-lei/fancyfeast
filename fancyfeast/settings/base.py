@@ -1,4 +1,5 @@
 import os
+import whitenoise
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -9,7 +10,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = os.environ['SECRET_KEY']
-SECRET_KEY = os.environ.get('SECRET_KEY','8yxngh$-(y(39yiu9gr^%f8q9qo9%vvvib0s-=1534zora^)w_')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','8yxngh$-(y(39yiu9gr^%f8q9qo9%vvvib0s-=1534zora^)w_')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     # third party apps
     'crispy_forms',
@@ -35,6 +37,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -113,10 +116,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'fancyfeast/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'fancyfeast/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -135,8 +138,10 @@ LOGIN_EXEMPT_URLS = (
     r'^accounts/reset-password/complete/$',
 )
 
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+# Run local smtp server
+# python -m smtpd -n -c DebuggingServer localhost:1025
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 1025
 
 # Try Django 1.8 tutorial
 # If using gmail, we need to unlock Captcha
