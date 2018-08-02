@@ -8,7 +8,7 @@ from accounts.forms import RegistrationForm
 def login_redirect(request):
     return redirect('/accounts/login')
 
-def home(request):
+def homepage(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():

@@ -1,5 +1,5 @@
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fancyfeast.settings.dev')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fancyfeast.settings.development')
 
 import django
 django.setup()
