@@ -1,6 +1,7 @@
 from .forms import (
     RegistrationForm, 
     EditProfileForm, 
+    EditUserForm,
 )
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
@@ -25,16 +26,30 @@ def change_password(request):
         args = {'form': form}
         return render(request, 'accounts/change_password.html', args)
 
+
 def edit_profile(request):
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
+        form = EditProfileForm(request.POST, instance=request.user.userprofile)
         if form.is_valid():
             form.save()
             return redirect(reverse('accounts:view_profile'))
     else:
-        form = EditProfileForm(instance=request.user)
+        form = EditProfileForm(instance=request.user.userprofile)
         args = {'form': form}
-        return render(request, 'accounts/edit_profile.html', args)
+        return render(request, 'accounts/edit_profile.html', args)    
+
+
+def edit_user(request):
+    if request.method == 'POST':
+        form = EditUserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('accounts:view_profile'))
+    else:
+        form = EditUserForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'accounts/edit_user.html', args)
+
 
 def view_profile(request, pk=None):
     if pk:

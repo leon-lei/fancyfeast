@@ -11,36 +11,36 @@ class UserProfileManager(models.Manager):
 
 class UserProfile(models.Model):
     CUISINE_CHOICES = (
-        ('american', 'American'),
-        ('asian', 'Asian'),
-        ('italian', 'Italian'),
-        (None, 'Still tasting!'),
+        ('American', 'American'),
+        ('Asian', 'Asian'),
+        ('Italian', 'Italian'),
+        ('Still tasting!', 'Still tasting!'),
     )
     
     DINING_CHOICES = (
-        ('weekly', 'Once a week'),
-        ('multi_weekly', 'Couple times a week'),
-        ('monthly', 'Once a month'),
-        ('multi_monthly', 'Couple times a month'),
-        (None, 'Still deciding!'),
+        ('Once a week', 'Once a week'),
+        ('Couple times a week', 'Couple times a week'),
+        ('Once a month', 'Once a month'),
+        ('Couple times a month', 'Couple times a month'),
+        ('Still deciding!', 'Still deciding!'),
     )
 
     AMBIENCE_CHOICES = (
-        ('bustling', 'Bustling'),
-        ('calm', 'Calm'),
-        ('gastro', 'Gastro-pub feel'),
-        ('fine_dining', 'Fine Dining'),
-        ('casual', 'Casual'),
-        (None, 'Still deciding!'),
+        ('Bustling', 'Bustling'),
+        ('Calm', 'Calm'),
+        ('Gastro-pub feel', 'Gastro-pub feel'),
+        ('Fine Dining', 'Fine Dining'),
+        ('Casual', 'Casual'),
+        ('Still deciding!', 'Still deciding!'),
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.TextField(max_length=500, blank=True)
     image = models.ImageField(upload_to='profile_image', blank=True)
-    fav_cuisine = models.CharField(max_length=20, blank=True, choices=CUISINE_CHOICES, default='american')
-    dining_pref = models.CharField(max_length=25, blank=True, choices=DINING_CHOICES, default='monthly')
-    ambience = models.CharField(max_length=25, blank=True, choices=AMBIENCE_CHOICES, default='calm')
-    unfav_cuisine = models.CharField(max_length=20, blank=True, choices=CUISINE_CHOICES, default='american')
+    fav_cuisine = models.CharField(max_length=20, blank=True, choices=CUISINE_CHOICES, default='American')
+    dining_pref = models.CharField(max_length=25, blank=True, choices=DINING_CHOICES, default='Once a month')
+    ambience = models.CharField(max_length=25, blank=True, choices=AMBIENCE_CHOICES, default='Calm')
+    unfav_cuisine = models.CharField(max_length=20, blank=True, choices=CUISINE_CHOICES, default='American')
 
     # Uncomment would filter the User Profiles in Admin
     # london = UserProfileManager()

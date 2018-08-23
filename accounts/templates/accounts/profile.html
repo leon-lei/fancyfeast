@@ -14,16 +14,15 @@
     <hr>
     
     <h3>Preferences</h3>
-    {% if request.user.username == user.username %}
-        You can edit
-    {% else %}
-        You cannot edit
-    {% endif %}
+        <p> <b>Favorite Cuisine: </b> {{ user.userprofile.fav_cuisine|capfirst }} </p>
+        <p> <b>Dining Preferences: </b> {{ user.userprofile.dining_pref|capfirst }} </p>
+        <p> <b>Ideal Ambience: </b> {{ user.userprofile.ambience|capfirst }} </p>
+        <p> <b>Don't ask me to go to: </b> {{ user.userprofile.unfav_cuisine|capfirst }} </p>
     <hr>
 
     <h3>Stats</h3>
     <p>Tribes I'm a part of: <b>{{ user.userprofile.tribe.count }}</b> </p>
-    <p>Places I've been: <b>4</b> </p>
+    <p>Places I've been: <b>{{ user.userprofile.event.count }}</b> </p>
     <p>Member for: <b>{{ user.date_joined|timesince }}</b> </p>
     <p>Best Dining Experience: <b>Xi'an Famous Foods</b> </p>
     <br>
