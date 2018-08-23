@@ -12,6 +12,11 @@ pillow = "*"
 "psycopg2-binary" = "*"
 whitenoise = "*"
 python-decouple = "*"
+pytest = "*"
+pytest-django = "*"
+pdbpp = "*"
+pytest-cov = "*"
+mixer = "*"
 
 [dev-packages]
 
